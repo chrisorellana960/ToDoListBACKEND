@@ -28,7 +28,7 @@ Los datos se almacenan en memoria (arreglos), por lo que se reinician al detener
 1. Clonar el repositorio:
 
 ```
-git clone <https://github.com/chrisorellana960/ToDoListBACKEND.git>
+git clone https://github.com/chrisorellana960/ToDoListBACKEND.git
 cd ToDoListBACKEND
 ```
 
@@ -147,6 +147,7 @@ http://localhost:3000/addGoal
 
 * Método: DELETE
 * URL:
+* Nota. siempre recuerda colocar el numero de la id despues de removeTask/ 
 
 ```
 http://localhost:3000/removeTask/1
@@ -158,6 +159,7 @@ http://localhost:3000/removeTask/1
 
 * Método: DELETE
 * URL:
+* Nota. siempre recuerda colocar el numero de la id despues de removeGoal/ 
 
 ```
 http://localhost:3000/removeGoal/1
