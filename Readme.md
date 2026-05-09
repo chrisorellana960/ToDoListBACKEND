@@ -28,7 +28,7 @@ Los datos se almacenan en memoria (arreglos), por lo que se reinician al detener
 1. Clonar el repositorio:
 
 ```
-git clone https://github.com/chrisorellana960/ToDoListBACKEND.git
+git clone -b semana4 https://github.com/chrisorellana960/ToDoListBACKEND.git
 cd ToDoListBACKEND
 ```
 
@@ -180,3 +180,11 @@ Recordar incluir siempre el header Authorization con la API KEY para acceder cor
 * Los datos no son persistentes
 * El proyecto cumple con los requisitos de uso de Node.js + Express
 * Se implementó middleware de autenticación con API KEY
+
+## Implementaciones de semana 4
+
+El backend implementa los siguientes códigos de respuesta:
+
+- 200 → Solicitud realizada correctamente
+- 400 → Datos enviados incorrectamente
+- 401 → API KEY inválida o no proporcionada 
