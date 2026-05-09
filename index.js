@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
-const API_KEY = "mi_apikey_123"; // Clave de API para autenticación
+
+const API_KEY = "mi_apikey_123";
 const PORT = 3000;
 
 // Middleware para leer JSON
@@ -13,18 +14,12 @@ let taskId = 1;
 let goalId = 1;
 
 // Middleware de autenticación
-
 const authMiddleware = (req, res, next) => {
     const apiKey = req.headers['authorization'];
 
-    if (!apiKey) {
+    // Validar existencia y autenticación
+    if (!apiKey || apiKey !== API_KEY) {
         return res.status(401).json({
-            message: 'No autorizado: falta API KEY'
-        });
-    }
-
-    if (apiKey !== API_KEY) {
-        return res.status(403).json({
             message: 'No autorizado: API KEY incorrecta'
         });
     }
@@ -32,26 +27,30 @@ const authMiddleware = (req, res, next) => {
     next();
 };
 
-// Endpoints    
-
 app.get('/', (req, res) => {
-    res.send('Servidor funcionando');
+    res.status(200).send('Servidor funcionando');
 });
 
 // GET
 
 app.get('/getTasks', authMiddleware, (req, res) => {
-    res.json(tasks);
+    res.status(200).json(tasks);
 });
 
 app.get('/getGoals', authMiddleware, (req, res) => {
-    res.json(goals);
+    res.status(200).json(goals);
 });
 
 // POST
 
 app.post('/addTask', authMiddleware, (req, res) => {
     const { title, deadline } = req.body;
+
+    if (!title || !deadline) {
+        return res.status(400).json({
+            message: 'Datos incompletos'
+        });
+    }
 
     const newTask = {
         id: taskId++,
@@ -61,7 +60,7 @@ app.post('/addTask', authMiddleware, (req, res) => {
 
     tasks.push(newTask);
 
-    res.json({
+    res.status(200).json({
         message: 'Tarea agregada correctamente',
         task: newTask
     });
@@ -69,6 +68,12 @@ app.post('/addTask', authMiddleware, (req, res) => {
 
 app.post('/addGoal', authMiddleware, (req, res) => {
     const { title, deadline } = req.body;
+
+    if (!title || !deadline) {
+        return res.status(400).json({
+            message: 'Datos incompletos'
+        });
+    }
 
     const newGoal = {
         id: goalId++,
@@ -78,7 +83,7 @@ app.post('/addGoal', authMiddleware, (req, res) => {
 
     goals.push(newGoal);
 
-    res.json({
+    res.status(200).json({
         message: 'Meta agregada correctamente',
         goal: newGoal
     });
@@ -89,9 +94,16 @@ app.post('/addGoal', authMiddleware, (req, res) => {
 app.delete('/removeTask/:id', authMiddleware, (req, res) => {
     const id = parseInt(req.params.id);
 
+    // Validar ID
+    if (isNaN(id)) {
+        return res.status(400).json({
+            message: 'ID inválido'
+        });
+    }
+
     tasks = tasks.filter(task => task.id !== id);
 
-    res.json({
+    res.status(200).json({
         message: 'Tarea eliminada correctamente'
     });
 });
@@ -99,15 +111,20 @@ app.delete('/removeTask/:id', authMiddleware, (req, res) => {
 app.delete('/removeGoal/:id', authMiddleware, (req, res) => {
     const id = parseInt(req.params.id);
 
+    if (isNaN(id)) {
+        return res.status(400).json({
+            message: 'ID inválido'
+        });
+    }
+
     goals = goals.filter(goal => goal.id !== id);
 
-    res.json({
+    res.status(200).json({
         message: 'Meta eliminada correctamente'
     });
 });
 
-
-
+// Iniciar servidor
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
