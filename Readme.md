@@ -10,7 +10,7 @@ La aplicación permite:
 * Obtener listas de tareas y metas
 * Eliminar tareas y metas
 
-Los datos se almacenan en memoria (arreglos), por lo que se reinician al detener el servidor. Además, el sistema cuenta con un middleware de seguridad mediante API KEY para proteger los endpoints.
+Los datos ahora se almacenan en una base de datos MongoDB Atlas, permitiendo persistencia de información incluso después de reiniciar el servidor. Además, el sistema cuenta con un middleware de seguridad mediante API KEY para proteger los endpoints.
 
 ---
 
@@ -20,6 +20,9 @@ Los datos se almacenan en memoria (arreglos), por lo que se reinician al detener
 * Express.js
 * Visual Studio Code
 * Thunder Client (para pruebas)
+* MongoDB Atlas
+* Mongoose
+* Dotenv
 
 ---
 
@@ -28,7 +31,7 @@ Los datos se almacenan en memoria (arreglos), por lo que se reinician al detener
 1. Clonar el repositorio:
 
 ```
-git clone -b semana4 https://github.com/chrisorellana960/ToDoListBACKEND.git
+git clone -b semana5 https://github.com/chrisorellana960/ToDoListBACKEND.git
 cd ToDoListBACKEND
 ```
 
@@ -38,13 +41,21 @@ cd ToDoListBACKEND
 npm install
 ```
 
-3. Ejecutar el servidor:
+3. Crear un archivo `.env` en la raíz del proyecto con el siguiente contenido:
+
+```env
+PORT=3000
+API_KEY=mi_apikey_123
+MONGO_URI=TU_MONGO_URI
+```
+
+4. Ejecutar el servidor:
 
 ```
 node index.js
 ```
 
-4. El servidor correrá en:
+5. El servidor correrá en:
 
 ```
 http://localhost:3000
@@ -58,7 +69,9 @@ Asegúrate de tener instalado:
 
 * Node.js (versión LTS)
 * npm (incluido con Node)
-
+* mongoose
+* dotenv
+* express
 ---
 
 ## API KEY
@@ -147,10 +160,10 @@ http://localhost:3000/addGoal
 
 * Método: DELETE
 * URL:
-* Nota. siempre recuerda colocar el numero de la id despues de removeTask/ 
+* Nota: Se debe colocar el ID generado por MongoDB después de removeTask/
 
 ```
-http://localhost:3000/removeTask/1
+http://localhost:3000/removeTask/ID_DE_MongoDB
 ```
 
 ---
@@ -159,10 +172,10 @@ http://localhost:3000/removeTask/1
 
 * Método: DELETE
 * URL:
-* Nota. siempre recuerda colocar el numero de la id despues de removeGoal/ 
+* Nota: Se debe colocar el ID generado por MongoDB después de removeGoal/
 
 ```
-http://localhost:3000/removeGoal/1
+http://localhost:3000/removeGoal/ID_DE_MongoDB
 ```
 
 ---
@@ -177,7 +190,7 @@ Recordar incluir siempre el header Authorization con la API KEY para acceder cor
 
 ## Notas finales
 
-* Los datos no son persistentes
+* Los datos ahora son persistentes gracias a MongoDB Atlas
 * El proyecto cumple con los requisitos de uso de Node.js + Express
 * Se implementó middleware de autenticación con API KEY
 
@@ -188,3 +201,11 @@ El backend implementa los siguientes códigos de respuesta:
 - 200 → Solicitud realizada correctamente
 - 400 → Datos enviados incorrectamente
 - 401 → API KEY inválida o no proporcionada 
+
+## Implementaciones de semana 5
+
+* Integración de MongoDB Atlas como base de datos
+* Uso de Mongoose para modelado de datos
+* Persistencia de información
+* Uso de variables de entorno mediante dotenv
+* Conexión segura a la base de datos mediante MONGO_URI
