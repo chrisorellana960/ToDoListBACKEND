@@ -38,7 +38,6 @@ Los datos ahora se almacenan en una base de datos MongoDB Atlas, permitiendo per
 
 ```
 git clone https://github.com/chrisorellana960/ToDoListBACKEND.git
-cd ToDoListBACKEND
 ```
 
 2. Entrar a la carpeta del proyecto:
