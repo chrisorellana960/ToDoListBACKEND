@@ -41,13 +41,19 @@ git clone https://github.com/chrisorellana960/ToDoListBACKEND.git
 cd ToDoListBACKEND
 ```
 
-2. Instalar dependencias:
+2. Entrar a la carpeta del proyecto:
+
+```
+cd ToDoListBACKEND
+```
+
+3. Instalar dependencias:
 
 ```
 npm install
 ```
 
-3. Crear un archivo `.env` en la raíz del proyecto con el siguiente contenido:
+4. Crear un archivo `.env` en la raíz del proyecto con el siguiente contenido:
 
 ```env
 PORT=5000
@@ -55,13 +61,13 @@ API_KEY=mi_apikey_123
 MONGO_URI=TU_MONGO_URI
 ```
 
-4. Ejecutar el servidor:
+5. Ejecutar el servidor:
 
 ```
 npm start
 ```
 
-5. El servidor correrá en:
+6. El servidor correrá en:
 
 ```
 http://localhost:5000
