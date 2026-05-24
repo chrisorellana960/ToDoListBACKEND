@@ -1,5 +1,6 @@
 require("node:dns/promises").setServers(["1.1.1.1", "8.8.8.8"]);
 
+const cors = require('cors');
 const express = require('express');
 const mongoose = require('mongoose');
 require('dotenv').config();
@@ -15,6 +16,7 @@ const PORT = process.env.PORT || 3000;
 
 // Middleware para leer JSON
 app.use(express.json());
+app.use(cors());
 
 // Conexión a MongoDB
 mongoose.connect(process.env.MONGO_URI)
@@ -72,9 +74,9 @@ app.get('/getGoals', authMiddleware, async (req, res) => {
 // POST
 
 app.post('/addTask', authMiddleware, async (req, res) => {
-    const { title, deadline } = req.body;
+    const { title, description, deadline } = req.body;
 
-    if (!title || !deadline) {
+    if (!title || !description || !deadline) {
         return res.status(400).json({
             message: 'Datos incompletos'
         });
@@ -83,6 +85,7 @@ app.post('/addTask', authMiddleware, async (req, res) => {
     try {
         const newTask = new Task({
             title,
+            description,
             deadline
         });
 
@@ -100,9 +103,9 @@ app.post('/addTask', authMiddleware, async (req, res) => {
 });
 
 app.post('/addGoal', authMiddleware, async (req, res) => {
-    const { title, deadline } = req.body;
+    const { title, description, deadline } = req.body;
 
-    if (!title || !deadline) {
+    if (!title || !description || !deadline) {
         return res.status(400).json({
             message: 'Datos incompletos'
         });
@@ -111,6 +114,7 @@ app.post('/addGoal', authMiddleware, async (req, res) => {
     try {
         const newGoal = new Goal({
             title,
+            description,
             deadline
         });
 
